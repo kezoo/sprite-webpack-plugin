@@ -9,6 +9,6 @@ module.exports = {
   processor: 'css',
   opacity: 0,
   prefix: '',
-  isMultiFolder: false,
+  multiFolders: false,
   margin: 0
 }
