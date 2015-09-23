@@ -1,0 +1,33 @@
+{
+  "name": "sprite-webpack-plugin",
+  "version": "0.1.5",
+  "description": "sprite-webpack-plugin",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kezoo/sprite-webpack-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kezoo/sprite-webpack-plugin/issues"
+  },
+  "keywords": [
+    "sprite",
+    "webpack",
+    "plugin",
+    "css",
+    "sass",
+    "less",
+    "stylus"
+  ],
+  "author": "kezoo",
+  "license": "MIT",
+  "devDependencies": {
+    "async": "^1.4.2",
+    "color": "^0.10.1",
+    "imageinfo": "^1.0.4",
+    "layout": "^2.2.0",
+    "lodash": "^3.10.1",
+    "lwip": "0.0.7",
+    "spritesheet-templates": "^10.0.0",
+  }
+}
