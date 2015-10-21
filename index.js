@@ -11,10 +11,9 @@ function SpriteWebpackPlugin(options) {
 SpriteWebpackPlugin.prototype.apply = function(compiler) {
   var self = this;
   var opt = self.options;
-  compiler.plugin("compile", function(params) {
-    Sprite.createStyles(opt);
-    Sprite.createImage(opt);
-  });
+  Sprite.createStyles(opt);
+  Sprite.createImage(opt);
+  Sprite.addImport(opt);
 }
 
 module.exports = SpriteWebpackPlugin;

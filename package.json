@@ -1,6 +1,6 @@
 {
   "name": "sprite-webpack-plugin",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "sprite-webpack-plugin",
   "main": "index.js",
   "repository": {
@@ -24,11 +24,14 @@
   "dependencies": {
     "async": "^1.4.2",
     "color": "^0.10.1",
+    "cssesc": "^0.1.0",
     "imageinfo": "^1.0.4",
+    "json2css": "^6.1.0",
     "layout": "^2.2.0",
     "lodash": "^3.10.1",
     "lwip": "0.0.7",
     "mkdirp": "^0.5.1",
+    "mustache": "^2.1.3",
     "spritesheet-templates": "^10.0.0"
   }
 }

@@ -1,0 +1,27 @@
+{{#items}}
+${{name}} = {{px.offset_x}} {{px.offset_y}} {{px.width}} {{px.height}}
+{{/items}}
+
+sprite-width($sprite)
+  width $sprite[2]
+
+sprite-height($sprite)
+  height $sprite[3]
+
+sprite-position($sprite)
+  background-position $sprite[0]  $sprite[1]
+
+sprite($sprite)
+  sprite-position($sprite)
+  background-repeat no-repeat
+  overflow hidden
+  display inline-block
+  sprite-width($sprite)
+  sprite-height($sprite)
+
+{{#items}}
+{{class}}
+  sprite(${{name}})
+  background-image url('{{{escaped_image}}}')
+
+{{/items}}

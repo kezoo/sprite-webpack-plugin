@@ -8,7 +8,9 @@ module.exports = {
   imgPath: process.cwd() + '/images/',
   processor: 'css',
   opacity: 0,
-  prefix: '',
+  template: null,
+  prefix: 'icon',
+  useImport: false,
+  indexName: 'sprites-index',
   multiFolders: false,
-  margin: 0
 }

@@ -1,0 +1,29 @@
+{{#items}}
+${{name}}: {{px.offset_x}} {{px.offset_y}} {{px.width}} {{px.height}}
+{{/items}}
+
+=sprite-width($sprite)
+  width: nth($sprite, 3)
+
+=sprite-height($sprite)
+  height: nth($sprite, 4)
+
+=sprite-position($sprite)
+  $sprite-offset-x: nth($sprite, 1)
+  $sprite-offset-y: nth($sprite, 2)
+  background-position: $sprite-offset-x  $sprite-offset-y
+
+=sprite($sprite)
+  +sprite-position($sprite)
+  background-repeat: no-repeat
+  overflow: hidden
+  display: inline-block
+  +sprite-width($sprite)
+  +sprite-height($sprite)
+
+{{#items}}
+{{class}}
+  +sprite(${{name}})
+  background-image: url('{{{escaped_image}}}')
+
+{{/items}}
