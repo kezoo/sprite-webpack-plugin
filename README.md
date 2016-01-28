@@ -143,9 +143,14 @@ the name would be: spriteName + connector + subDirName + "." + processor
 
 By the way, the className is: "." + prefix + connector + imageName
 
-useImport: Boolean true or false, Default is false, if you set 'bundleMode' as 'one', this option will not be useful anymore.
+useImport: Boolean true or false, Default is false
+if you set 'bundleMode' as 'one', this option will not be useful anymore.
 
-[ useImport explanation ] If you set true, and if you also preferred 'multiple', the plugin will attempt to find your 'sprite-index.css' (spriteName + connector + indexName + "." + proccesor), if not found, the plugin will create it, then automatically add css '@import' for you. It would look like this:
+[ useImport explanation ]
+If you set true, and if you also preferred 'multiple',
+the plugin will attempt to find your 'sprite-index.css' (spriteName + connector + indexName + "." + proccesor),
+if not found, the plugin will create it,
+then automatically add css '@import' for you. It would look like this:
 
 @import "./sprite-base.css";
 @import "./sprite-home.css";
