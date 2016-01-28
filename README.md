@@ -1,179 +1,161 @@
 # Sprite-webpack-plugin
 
+2016.01 Updates:
+```
+ - fix slash problems on windows.
+ - set option 'bundleMode' instead of 'multiFolders' (please take notice of this).
+ - fix stylus extension.
+ - fix sprite image size, should be more appropriate.
+ - fix source dir that is located inside the outputted images dir caused problems.
+```
+
+Next, Refactoring the code, actually I've already done a little, and also add support for Retina.
+( For Retina display, what I thought about is you can specify one or few directories as Retina outputs, but in this way, we need a way to remember this. )
+The expecting date is unknown now, hope soon.
+
 Build CSS sprite on the fly while running Webpack task.
-Currently support the following CSS compilers: 
+Currently support the following CSS compilers:
+```bash
   * less
   * sass / scss
   * stylus
+```
+
+## Install:
+
+```bash
+npm install sprite-webpack-plugin
+```
 
 ## Usage:
 
-> install: npm install sprite-webpack-plugin
+- A simple example in webpack.config.js:
 
-> then in webpack-config.js to initialize it:
-
-*Example in webpack-config.js:*
-<pre><code>
+```javascript
 var sprite = require('sprite-webpack-plugin');
 
 module.exports = {
   plugins: [
     new sprite({
-      'source': __dirname + '/sprites/',
+      'source' : __dirname + '/sprites/',
       'imgPath': __dirname + '/app/images/',
       'cssPath': __dirname + '/app/styles/'
     });
   ]
 }
-</code></pre>
+```
 
-**NOTE: This is just a simple example to show you how to use the plugin. if you are still unfamiliar with Webpack, you may need head [here][id] to learn it firstly.
+If you want to learn more about Webpack, so [here is the link][id].
 [id]: http://webpack.github.io
 
-######Acturally if your project is not that big, then the example above is all you need to do.######
+### Options ###
+```bash
+source: String, path to sprites source dir.
 
-### How it works ###
+imgPath: String, path to sprites output dir.
 
-- source: ***string*** image resource.
+cssPath: String, path to sprites stylesheets output dir.
 
-- imgPath: ***string*** will genetate sprite image.
+prefix: String, the prefix of sprites classname, Default is 'icon'
 
-- cssPath: ***string*** will generate stylesheet.
+connector: String, 'dash' or 'underline', Default is 'dash'
 
-- prefix: ***string*** the prefix of sprite CLASS name
-  
-  DEFAULT: "icon""
- 
- **NOTE, you need import that generated stylesheet to your pages.
- 
- final className would be: *prefix-imagename*
- 
- Now you can call this CLASS.
+spriteName: String, this is the prefix of all outputted files names, Default is 'sprite'
 
-### Other Parameters
+baseName: String, this is the base name, Default is 'base'
 
-- spriteName: ***string*** the name of generated image and stylesheet
+orientation: String, 'vertical' or 'horizontal', Default is 'vertical'
 
-  DEFAULT: "sprite-base"
-  
-- orientation: ***string*** vertical or horizontal 
-  
-  DEFAULT: "vertical"
-  
-- format: ***string*** sprites images format
+format: String, image format, 'png' or 'jpg', Default is 'png'
 
-  DEFAULT: "png"
-  
-- processor: ***string*** css or less or sass or scss or stylus
+processor: String, css processor, 'css' or 'less' or 'sass' or 'scss', Default is 'css'
 
-  DEFAULT: "css"
-  
-- opacity: ***number*** 0 ~ 1
+opacity: Number, 0 - 1, Default is 0
 
-  DEFAULT: 0
-  
-- indexName: ***string*** sprite index name
+indexName: String, the sprite css index file name, when you use 'useImport' option
 
-  DEFAULT: "sprite-index"
-  
-- multiFolders: ***boolean*** true or false 
+bundleMode: String, 'one' or 'multiple', Default is 'one'.
 
-  DEFAULT: false
-  
-  > (recommended for big project and people who want to sort it modularly)
-  
-  **Note: 
-  
-  If you enable this, the plugin will generate sprites images and stylesheets
-   
-  based on the structure of your source folder.
-  
-  ######how it works:######
-  
-  Let's assumed we have a source dir named 'sprites'.
-  
-  'sprites' has sub folders: home, users, etc...
-  
-    * sprites/ *.png
-  
-    * sprites/home/ *.png
-  
-    * sprites/users/ *.png
-    
-    * ...
-  
-  Image dir would be like: 
-  
-    * images/sprite-base.png
-  
-    * images/home/sprite-home.png
-  
-    * images/users/sprite-users.png
-  
-    * ...
-    
-  Styles dir would be like:
-  
-    * styles/sprite-base.css
-    
-    * styles/home/sprite-home.css
-  
-    * styles/users/sprite-users.css
-  
-    * ...
-    
-   As you can see, when you enable this feature, the option 'spriteName' will be no use.
-   
-   the plugin will automagically name for you.
-   
-   if sub folders is empty, then the plugin will do nothing.
-   
-  
-- useImport: ***boolean*** true or false
+[ bundleMode explanation ] the plugin will walk source dir recursively.
 
-  DEFAULT: false
-  
-  **Note: 
-  
-  This feature will only available when you enabled multiFolders.
-  
-  ######how it works:######
-  
-  remember the option 'indexName'?! DEFAULT is 'sprite-idnex'
-  
-  Let's assumed we have a sprite index file in our styles dir
-  
-    * styles/sprite-index.css
-  
-  and other generated stylesheets in styles dir
-  
-    * styles/sprite-base.css
-    
-    * styles/home/sprite-home.css
-  
-    * styles/users/sprite-users.css
-    
-  then the file 'sprite-index.css' would be like this:
-  
-    > @import "sprite-base.css";
-      
-    > @import "home/sprite-home.css";
-      
-    > @import "users/sprite-users.css";
-    
-  All you need to do is linking 'sprite-index.css' to your project.
-  
+when you choose 'one', the final outputted image file or css file would be bundled as single one file.
 
-####classname####
-classname: prefix-imagename
+when you choose 'multiple', the outputted files would be based on the structure of the source dir.
+
+Imagine the source dir would be like this:
+(source dir can be either inside your images dir or outside it)
+
+├── src
+    └── styles
+    └── images
+        └── spritesource
+            └── home
+            │   └── example.png
+            └── users
+            │   └── user.png
+            └── button.png
+
+If you select 'one', it would look like this:
+
+├── src
+    └── styles
+        └── sprite-base.css
+    └── images
+        └── sprite-base.png
+        └── spritesource
+            └── home
+            │   └── example.png
+            └── users
+            │   └── user.png
+            └── button.png
+
+If you select 'multiple', then it would look like this:
+
+├── src
+    └── styles
+    │   └── sprite-base.css
+    │   └── sprite-home.css
+    │   └── sprite-users.css
+    └── images
+        └── sprite-base.png
+        └── sprite-home.png
+        └── sprite-users.png
+        └── spritesource
+            └── home
+            │   └── example.png
+            └── users
+            │   └── user.png
+            └── button.png
+
+A little thing about name:
+
+"sprite-base.css":
+- the "sprite" is the option 'spriteName'.
+- the "-" is the option 'connector'.
+- the "base" is the option 'baseName'.
+- the "css" is the option 'processor'.
+
+So the final file name has two ways:
+1. source files which are presented directly in the source dir.
+the name would be: spriteName + connector + baseName + "." + processor
+2. source files which are presented in sub dirs.
+the name would be: spriteName + connector + subDirName + "." + processor
+
+By the way, the className is: "." + prefix + connector + imageName
+
+useImport: Boolean true or false, Default is false, if you set 'bundleMode' as 'one', this option will not be useful anymore.
+
+[ useImport explanation ] If you set true, and if you also preferred 'multiple', the plugin will attempt to find your 'sprite-index.css' (spriteName + connector + indexName + "." + proccesor), if not found, the plugin will create it, then automatically add css '@import' for you. It would look like this:
+
+@import "./sprite-base.css";
+@import "./sprite-home.css";
+@import "./sprite-users.css";
+
+```
+
 
 ####help####
-p.s. If there are still any questions remained, don't hesitate to start an issue.
-
-
-##### To-Do: 
-optimize code. :)
-
+If there are still any questions remained, don't hesitate to start an issue or you can pull a request to help it, cheers.
 
 Partially inspired by Css-Sprite, thanks.
 

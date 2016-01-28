@@ -1,5 +1,7 @@
 module.exports = {
-  spriteName: 'sprite-base',
+  spriteName: 'sprite',
+  connector: 'dash',
+  baseName: 'base',
   orientation: 'vertical',
   background: '#FFFFFF',
   format: 'png',
@@ -8,9 +10,8 @@ module.exports = {
   imgPath: process.cwd() + '/images/',
   processor: 'css',
   opacity: 0,
-  template: null,
   prefix: 'icon',
   useImport: false,
-  indexName: 'sprites-index',
-  multiFolders: false,
-}
+  indexName: 'index',
+  bundleMode: 'one'
+};

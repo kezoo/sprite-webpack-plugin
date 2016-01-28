@@ -1,0 +1,14 @@
+{
+  "parser" : "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "indent": [2, 2, {"SwitchCase": 1}],
+    "comma-dangle": 0,
+    "no-console": 0,
+    "semi" : [2, "always"],
+    "no-alert": 0
+  }
+}
