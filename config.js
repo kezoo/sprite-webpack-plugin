@@ -9,7 +9,6 @@ module.exports = {
   cssPath: process.cwd() + '/styles/',
   imgPath: process.cwd() + '/images/',
   processor: 'css',
-  templatePath: process.cwd() + '/templates/',
   opacity: 0,
   prefix: 'icon',
   useImport: false,
