@@ -56,7 +56,7 @@ imgPath: String, path to sprites output dir.
 
 cssPath: String, path to sprites stylesheets output dir.
 
-templatePath: String, path to customized template dir.
+templatePath: String, full path to custom template. (Optional)
 
 prefix: String, the prefix of sprites classname, Default is 'icon'
 
