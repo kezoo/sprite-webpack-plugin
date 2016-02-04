@@ -14,5 +14,5 @@ module.exports = {
   useImport: false,
   indexName: 'index',
   bundleMode: 'one',
-  retina: false
+  dotsPerPixel: 1
 };
