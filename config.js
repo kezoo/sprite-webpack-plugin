@@ -13,5 +13,6 @@ module.exports = {
   prefix: 'icon',
   useImport: false,
   indexName: 'index',
-  bundleMode: 'one'
+  bundleMode: 'one',
+  retina: false
 };
