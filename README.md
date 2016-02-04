@@ -56,6 +56,8 @@ imgPath: String, path to sprites output dir.
 
 cssPath: String, path to sprites stylesheets output dir.
 
+templatePath: String, path to customized template dir.
+
 prefix: String, the prefix of sprites classname, Default is 'icon'
 
 connector: String, 'dash' or 'underline', Default is 'dash'
@@ -69,6 +71,8 @@ orientation: String, 'vertical' or 'horizontal', Default is 'vertical'
 format: String, image format, 'png' or 'jpg', Default is 'png'
 
 processor: String, css processor, 'css' or 'less' or 'sass' or 'scss', Default is 'css'
+
+retina: Boolean, returns higher quality image, Default is false
 
 opacity: Number, 0 - 1, Default is 0
 
