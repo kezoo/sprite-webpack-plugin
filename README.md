@@ -72,7 +72,7 @@ format: String, image format, 'png' or 'jpg', Default is 'png'
 
 processor: String, css processor, 'css' or 'less' or 'sass' or 'scss', Default is 'css'
 
-retina: Boolean, returns higher quality image, Default is false
+dotsPerPixel: Number, dots per px unit, used for sharper images, Default is 1
 
 opacity: Number, 0 - 1, Default is 0
 
