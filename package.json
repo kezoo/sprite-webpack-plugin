@@ -1,6 +1,6 @@
 {
   "name": "sprite-webpack-plugin",
-  "version": "0.3.5",
+  "version": "0.4.0",
   "description": "sprite-webpack-plugin",
   "main": "index.js",
   "scripts": {
