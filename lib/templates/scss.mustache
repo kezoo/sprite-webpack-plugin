@@ -40,3 +40,14 @@ ${{name}}: {{px.offset_x}} {{px.offset_y}} {{px.width}} {{px.height}};
 }
 
 {{/items}}
+
+{{ #enlarge }}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 192dpi) {
+  {{#items}}
+    {{class}} {
+      background-image: url('{{{enlargedImage}}}');
+      background-size: {{px.enlargedX}} {{px.enlargedY}};
+    }
+  {{/items}}
+}
+{{ /enlarge }}

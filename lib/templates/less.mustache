@@ -20,7 +20,7 @@
   .sprite-position(@sprite);
   background-repeat: no-repeat;
   overflow: hidden;
-  display: block;
+  display: inline-block;
   .sprite-width(@sprite);
   .sprite-height(@sprite);
 }
@@ -32,3 +32,14 @@
 }
 
 {{/items}}
+
+{{ #enlarge }}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 192dpi) {
+  {{#items}}
+    {{class}} {
+      background-image: url('{{{enlargedImage}}}');
+      background-size: {{px.enlargedX}} {{px.enlargedY}};
+    }
+  {{/items}}
+}
+{{ /enlarge }}

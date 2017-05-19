@@ -1,6 +1,6 @@
 {
   "name": "sprite-webpack-plugin",
-  "version": "0.3.5",
+  "version": "1.0.0",
   "description": "sprite-webpack-plugin",
   "main": "index.js",
   "scripts": {
@@ -25,19 +25,17 @@
   "author": "kezoo",
   "license": "MIT",
   "dependencies": {
-    "async": "^1.4.2",
-    "color": "^0.10.1",
-    "cssesc": "^0.1.0",
-    "imageinfo": "^1.0.4",
-    "layout": "^2.2.0",
-    "lodash": "^3.10.1",
+    "async": "2.3.0",
+    "cssesc": "1.0.0",
     "lwip": "0.0.9",
     "mkdirp": "^0.5.1",
-    "mustache": "^2.1.3",
-    "spritesheet-templates": "^10.0.0"
+    "mustache": "2.1.3",
+    "spritesheet-templates": "10.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^4.1.6",
-    "eslint": "^1.10.3"
+    "eslint": "^1.10.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.24.1",
   }
 }

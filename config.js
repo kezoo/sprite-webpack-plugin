@@ -1,17 +1,25 @@
+import path from 'path';
+
 module.exports = {
   spriteName: 'sprite',
-  connector: 'dash',
+  connector: 'dash', // -, _, '', capitalize
   baseName: 'base',
   orientation: 'vertical',
   background: '#FFFFFF',
   format: 'png',
-  source: process.cwd() + '/sprites/',
-  cssPath: process.cwd() + '/styles/',
-  imgPath: process.cwd() + '/images/',
+  source: null,
+  cssPath: '',
+  imgPath: '',
+  templatePath: null,
   processor: 'css',
   opacity: 0,
+  margin: 2,
   prefix: 'icon',
-  useImport: false,
+  // useImport: false,
   indexName: 'index',
-  bundleMode: 'one'
+  bundleMode: 'one',
+  isBundled: true,
+  enlarge: null,
+  nonRetinaDir: null,
+  fixedStylePath: null,
 };
