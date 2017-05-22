@@ -1,0 +1,63 @@
+{
+  "name": "color-name",
+  "version": "1.1.2",
+  "description": "A list of color names and its values",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "files": [
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/dfcreative/color-name.git"
+  },
+  "keywords": [
+    "color-name",
+    "color",
+    "color-keyword",
+    "keyword"
+  ],
+  "author": {
+    "name": "DY",
+    "email": "dfcreative@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dfcreative/color-name/issues"
+  },
+  "homepage": "https://github.com/dfcreative/color-name",
+  "gitHead": "db3f3979970c30380f30ae3209a144c855578ae1",
+  "_id": "color-name@1.1.2",
+  "_shasum": "5c8ab72b64bd2215d617ae9559ebb148475cf98d",
+  "_from": "color-name@>=1.0.0 <2.0.0",
+  "_npmVersion": "3.7.2",
+  "_nodeVersion": "6.2.0",
+  "_npmUser": {
+    "name": "dfcreative",
+    "email": "df.creative@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "dfcreative",
+      "email": "df.creative@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "5c8ab72b64bd2215d617ae9559ebb148475cf98d",
+    "size": 2858,
+    "noattachment": false,
+    "tarball": "http://registry.npm.taobao.org/color-name/download/color-name-1.1.2.tgz"
+  },
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/color-name-1.1.2.tgz_1489460073624_0.09481105045415461"
+  },
+  "directories": {},
+  "publish_time": 1489460075452,
+  "_cnpm_publish_time": 1489460075452,
+  "_hasShrinkwrap": false,
+  "_resolved": "http://registry.npm.taobao.org/color-name/download/color-name-1.1.2.tgz",
+  "readme": "ERROR: No README data found!"
+}

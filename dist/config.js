@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   spriteName: 'sprite',
   connector: 'dash', // -, _, '', capitalize
@@ -19,5 +21,5 @@ module.exports = {
   isBundled: true,
   enlarge: null,
   nonRetinaDir: null,
-  fixedStylePath: null,
+  fixedStylePath: null
 };
