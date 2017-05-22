@@ -44,7 +44,8 @@
 
   prefix  {String} icon prefix name, default "icon"
 
-  connector {String} an connection between prefix and icon name. "-", "_", "capitalize", ""(means nothing), default "-"
+  connector {String} an connection between prefix and icon name.
+             "-", "_", "capitalize", ""(means nothing), default "-"
 
   spriteName {String} prefix name of images and css files, default "sprite"
 
@@ -58,11 +59,19 @@
 
   opacity {Number} 0 - 1, default 0
 
-  isBundled {Boolean} bundle all icons as a single one image file or output them based your directory structure (means one subdir could produce one image file and one css file), default true
+  isBundled {Boolean} bundle all icons as a single one image file or output them
+            based your directory structure (means one subdir could produce
+            one image file and one css file), default true
 
   enlarge {Number} for retina display, valid number 1 - 3, default null
 
   margin {Number} make sprite image prettier, valid number 2 - 10, default 2
+
+  templatePath {String} define your own css template, default null
+
+  fixedStylePath {String} this is the path of the css property 'background-url',
+                 if you know the image url, you can assign it here, recommend.
+                 otherwise the plugin will use the relative path
 
 
 ```
