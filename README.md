@@ -81,6 +81,7 @@ If you want to use your own template, here is the object will return to it:
 ```
   @return Object:
     {
+      items:
       [
         {
           name: '' // Icon name,
