@@ -31,14 +31,6 @@ const cssTemplate = (params) => {
     enlarge: wEnlarge,
     imgUrl: null
   };
-  let enlargedImgData = null;
-  const spriteImgData = options.base64Data;
-  const tImgName = options.imgName;
-  const lastIndexDot = tImgName.lastIndexOf('.');
-  const nameWithoutExt = tImgName.slice(0, lastIndexDot);
-  const tImgNameEnlarged = nameWithoutExt + '@2x' + tImgName.slice(lastIndexDot);
-  let tEnlargeX = null;
-  let tEnlargeY = null;
 
   template.items = cssItems.map( (item) => {
     item.image = item.image.replace(/\\/g, '\/');
@@ -47,38 +39,18 @@ const cssTemplate = (params) => {
     item['class'] = '.' + cssesc(item.name, {isIdentifier: true});
     if (wEnlarge) {
       const insertIndex = item.escaped_image.lastIndexOf('.');
-
-      if (options.reqBase64) {
-        spriteImgData.forEach( (item) => {
-          if (item.imgName.toLowerCase() === tImgNameEnlarged.toLowerCase()) {
-            enlargedImgData = item.base64;
-          }
-        })
+      if (insertIndex > 0) {
+        item['enlargedImage'] = `${item.escaped_image.slice(0, insertIndex)}@${wEnlarge}x${item.escaped_image.slice(insertIndex)}`
       }
-
-      if (!options.reqBase64 && insertIndex > 0) {
-        enlargedImgData = `${item.escaped_image.slice(0, insertIndex)}@${wEnlarge}x${item.escaped_image.slice(insertIndex)}`;
-      }
-
-      item['enlargedImage'] = enlargedImgData;
       item['enlargedX'] = Math.floor(imgX / wEnlarge);
       item['enlargedY'] = Math.floor(imgY / wEnlarge);
       item.px['enlargedX'] = item['enlargedX'] + 'px';
       item.px['enlargedY'] = item['enlargedY'] + 'px';
-
-      tEnlargeX = item.px['enlargedX'];
-      tEnlargeY = item.px['enlargedY'];
-
     }
     template.imgUrl = item.escaped_image;
-    template.imgHdUrl = enlargedImgData;
-    template.imgName = nameWithoutExt;
-    template.nameClass = '.' + nameWithoutExt;
-    template.enlargedX = tEnlargeX;
-    template.enlargedY = tEnlargeY;
     return item;
   });
-
+  // console.log('template: ', template)
   const tmplFile = tmplPathFn(options.processor, options.templatePath);
   const css = mustache.render(tmplFile, template);
   return css;

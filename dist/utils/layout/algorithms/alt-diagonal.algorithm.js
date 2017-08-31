@@ -1,6 +1,4 @@
-"use strict";
-
-// Add in diagonal algorithm
+// Add in reverse-diagonal algorithm
 exports.sort = function (items) {
   // Sort the items by their diagonal
   items.sort(function (a, b) {
@@ -16,12 +14,12 @@ exports.placeItems = function (items) {
   var x = 0,
       y = 0;
   items.forEach(function (item) {
-    // Update the x to the current width
-    item.x = x;
+    var itemWidth = item.width;
+    item.x = x - itemWidth;
     item.y = y;
 
-    // Increment the x and y by the item's dimensions
-    x += item.width;
+    // Decrement the x and increment the y by the item's dimensions
+    x -= itemWidth;
     y += item.height;
   });
 

@@ -1,5 +1,3 @@
-'use strict';
-
 function PackingSmith(algorithm, options) {
   // Define items and save algorithm for later
   this.items = [];
@@ -17,13 +15,13 @@ PackingSmith.prototype = {
    * @param {Number} item.height Height of the item
    * @param {Mixed} [item.meta] Any meta data you would like to store related to the item
    */
-  'addItem': function addItem(item) {
+  'addItem': function (item) {
     // Save the item for later
     this.items.push(item);
   },
   // Method to normalize coordinates to 0, 0
   // This is bad to do mid-addition since it messes up the algorithm
-  'normalizeCoordinates': function normalizeCoordinates() {
+  'normalizeCoordinates': function () {
     // Grab the items
     var items = this.items;
 
@@ -43,40 +41,40 @@ PackingSmith.prototype = {
       coords.y -= minY;
     });
   },
-  'getStats': function getStats() {
+  'getStats': function () {
     // Get the endX and endY for each item
     var items = this.items,
         coordsArr = items.map(function (item) {
-      return item;
-    }),
+          return item;
+        }),
         minXArr = coordsArr.map(function (coords) {
-      return coords.x;
-    }),
+          return coords.x;
+        }),
         minYArr = coordsArr.map(function (coords) {
-      return coords.y;
-    }),
+          return coords.y;
+        }),
         maxXArr = coordsArr.map(function (coords) {
-      return coords.x + coords.width;
-    }),
+          return coords.x + coords.width;
+        }),
         maxYArr = coordsArr.map(function (coords) {
-      return coords.y + coords.height;
-    });
+          return coords.y + coords.height;
+        });
 
     // Get the maximums of these
     var retObj = {
-      'minX': Math.max.apply(Math, minXArr),
-      'minY': Math.max.apply(Math, minYArr),
-      'maxX': Math.max.apply(Math, maxXArr),
-      'maxY': Math.max.apply(Math, maxYArr)
-    };
+          'minX': Math.max.apply(Math, minXArr),
+          'minY': Math.max.apply(Math, minYArr),
+          'maxX': Math.max.apply(Math, maxXArr),
+          'maxY': Math.max.apply(Math, maxYArr)
+        };
 
     // Return the stats
     return retObj;
   },
-  'getItems': function getItems() {
+  'getItems': function () {
     return this.items;
   },
-  'processItems': function processItems() {
+  'processItems': function () {
     // Run the items through our algorithm
     var items = this.items;
     if (this.sort) {
@@ -90,7 +88,7 @@ PackingSmith.prototype = {
     // Return the items
     return items;
   },
-  'exportItems': function exportItems() {
+  'exportItems': function () {
     // Process the items
     this.processItems();
 
@@ -106,17 +104,17 @@ PackingSmith.prototype = {
    * @returns {Number} retObj.width Width of the processed layout
    * @returns {Mixed[]} retObj.items Organized items
    */
-  'export': function _export() {
+  'export': function () {
     // Grab the stats, coordinates, and items
     var items = this.exportItems(),
         stats = this.getStats();
 
     // Generate and return our retObj
     var retObj = {
-      'height': stats.maxY,
-      'width': stats.maxX,
-      'items': items
-    };
+          'height': stats.maxY,
+          'width': stats.maxX,
+          'items': items
+        };
     return retObj;
   }
 };

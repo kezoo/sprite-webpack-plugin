@@ -1,5 +1,10 @@
 {{#items}}
 {{class}} {
+  display: inline-block;
+  background-position: {{px.offset_x}} {{px.offset_y}};
+  background-repeat: no-repeat;
+  width: {{px.width}};
+  height: {{px.height}};
   background-image: url('{{{escaped_image}}}');
 }
 {{/items}}
@@ -14,14 +19,3 @@
   {{/items}}
 }
 {{ /enlarge }}
-
-{{#items}}
-{{class}} {
-  display: inline-block;
-  background-position: {{px.offset_x}} {{px.offset_y}};
-  background-repeat: no-repeat;
-  width: {{px.width}};
-  height: {{px.height}};
-}
-{{/items}}
-

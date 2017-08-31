@@ -55,7 +55,7 @@
 
   format {String} image format, 'png' or 'jpg', default 'png'
 
-  processor {String} css processor, 'css' or 'less' or 'sass' or 'scss', default 'css'
+  processor {String} css processor, 'css' or 'less' or 'sass' or 'stylus', default 'css'
 
   opacity {Number} 0 - 1, default 0
 
@@ -69,9 +69,10 @@
 
   templatePath {String} define your own css template, default null
 
-  fixedStylePath {String} this is the path of the css property 'background-url',
+  fixedStylePath {String} this is for the css property 'background-url',
                  if you know the image url, you can assign it here, recommend.
-                 otherwise the plugin will use the relative path
+                 otherwise the plugin will use the relative path.
+                 :new:, add support for base64, simply just using this word.
 
 
 ```

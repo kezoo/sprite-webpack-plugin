@@ -15,9 +15,6 @@ import _ from './utils/underscore';
 
 let opts = _.clone(tConfig);
 
-let imgDataClone = null;
-let spriteImgBaseData = [];
-
 const imageTypes = Util.imageTypes;
 
 templater.addTemplate('sprite', require(path.join(__dirname, 'templates/sprite.js')));
@@ -82,27 +79,17 @@ const matchedLen = (list, identify) => {
 Any detected duplicate name will be: name + 1
  */
 const handleDupeName = (imgData) => {
-  if (!imgData || !_.isArray(imgData)) return false;
+  if (!imgData || !_.isArray(imgData) || _.isEmpty(imgData)) return false;
 
   let names = [];
   let itemFiles = null;
   let tName = null;
-  let oriDirName = null;
-
-  let usedNames = [];
 
   _.map(imgData, (item) => {
     itemFiles = item.files;
     names = [];
-    oriDirName = _.clone(item.dirName);
 
-    if (_.includes(usedNames, oriDirName)) {
-      item.dirName += matchedLen(usedNames, item.dirName);
-    }
-
-    usedNames.push(oriDirName);
-
-    if (_.isUndefined(itemFiles) || !_.isArray(itemFiles)) return;
+    if (_.isUndefined(itemFiles) || !_.isArray(itemFiles) || _.isEmpty(itemFiles)) return;
 
     itemFiles.forEach( (img) => {
       tName = img.imgName;
@@ -117,9 +104,7 @@ const handleDupeName = (imgData) => {
     })
 
     return item;
-  });
-
-  return imgData;
+  })
 }
 
 const initConfig = (config) => {
@@ -194,12 +179,6 @@ const initConfig = (config) => {
   config.color = color.rgbArray();
   config.color.push(config.opacity);
 
-  config['reqBase64'] = false;
-
-  if (!_.isUndefined(opts.fixedStylePath) && _.isString(opts.fixedStylePath) && opts.fixedStylePath.toUpperCase() === 'BASE64') {
-    opts.reqBase64 = true;
-  }
-
   opts = _.assign({}, opts, config);
 
 }
@@ -271,8 +250,9 @@ const getImagesData = () => {
     no matter how it's been bundled
    */
   _.filter(imagesData, (item) => !_.isEmpty(item.files));
-
-  imagesData = handleDupeName(imagesData);
+  if (handleDupeName(imagesData)) {
+    imagesData = handleDupeName(imagesData);
+  }
 
   return imagesData;
 }
@@ -284,7 +264,6 @@ const spritesLayout = () => {
       'binary-tree';
 
   const imagesData = getImagesData();
-  imgDataClone = _.clone(imagesData);
 
   if (_.isUndefined(imagesData) || !_.isArray(imagesData) || _.isEmpty(imagesData)) {
     return Util.throwError('noImages');
@@ -350,10 +329,7 @@ const transformStyles = () => {
         'connector': props.connector,
         'processor': props.processor,
         'templatePath': props.templatePath,
-        'enlarge': props.enlarge,
-        'reqBase64': props.reqBase64,
-        'base64Data': spriteImgBaseData,
-        'imgName': props.imgName
+        'enlarge': props.enlarge
       }
     }
   );
@@ -392,14 +368,6 @@ const transformStyles = () => {
     imgName = `${imgName}.${opts.format}`;
     imgPath = regHttp.test(stylePath) ? url.resolve(stylePath, imgName) : path.join(stylePath, imgName);
 
-    if (opts.reqBase64) {
-      spriteImgBaseData.forEach( (item) => {
-        if (item.imgName.toLowerCase() === imgName.toLowerCase()) {
-          imgPath = item.base64;
-        }
-      })
-    }
-
     propsStyle.sprites = [];
     propsStyle.width = layout.width;
     propsStyle.height = layout.height;
@@ -409,9 +377,7 @@ const transformStyles = () => {
     propsStyle.processor = opts.processor;
     propsStyle.templatePath = opts.templatePath;
     propsStyle.enlarge = opts.enlarge ? opts.enlarge : false;
-    propsStyle.reqBase64 = opts.reqBase64;
-    propsStyle.imgName = imgName;
-
+    // console.log(layout.items)
     layout.items.forEach( (imgItem, imgItemKey) => {
 
       if (propsStyle.enlarge) {
@@ -442,7 +408,7 @@ const transformStyles = () => {
     templateList.push(tmpl);
 
   });
-
+  // console.log('templateList: ', templateList)
   return templateList;
 }
 
@@ -465,7 +431,7 @@ const createCss = () => {
   })
 }
 
-const createImg = (tCallbackFn) => {
+const createImg = () => {
 
   const layouts = spritesLayout();
 
@@ -521,42 +487,8 @@ const createImg = (tCallbackFn) => {
 
         image.writeFile(imgFinalPath, function(err, file) {
           // console.log('SpriteImage has been created')
-          next();
         });
-      },
-      function(next) {
-        const tFiles = fs.readdirSync(opts.imgPath);
-        const dirNames = _.map(imgDataClone, 'dirName');
-        const fullNames = _.map(dirNames, (item) => Util.formatWords([opts.spriteName, item], opts.connector));
-        let nameList = [];
-        let tImgName = null;
-        let isMatched = false;
-        let tImgPath = null;
 
-        if (!_.isUndefined(tFiles) && _.isArray(tFiles)) {
-          tFiles.forEach( (item) => {
-            if (Util.isImage(item)) {
-              nameList = item.split('.');
-              nameList.splice(nameList.length-1);
-              tImgName = nameList.join('.');
-              tImgPath = path.join(opts.imgPath, item);
-
-              isMatched = _.some(fullNames, (item) => tImgName.match(new RegExp(item)));
-
-              if (isMatched) {
-                spriteImgBaseData.push({
-                  name: tImgName,
-                  imgName: item,
-                  path: tImgPath,
-                  base64: new Buffer(fs.readFileSync(tImgPath)).toString('base64')
-                });
-              }
-            }
-          });
-
-        }
-
-        !_.isUndefined(tCallbackFn) && _.isFunction(tCallbackFn) && tCallbackFn();
       }
     ], function(err) {
       if (err) return console.log('waterfall ERR: ', err);
@@ -565,9 +497,7 @@ const createImg = (tCallbackFn) => {
 }
 
 const create = () => {
-  if (opts.reqBase64) {
-    return createImg(createCss);
-  }
+
   createCss();
   createImg();
 }

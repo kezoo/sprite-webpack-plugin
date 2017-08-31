@@ -1,5 +1,3 @@
-"use strict";
-
 // Add in top-down algorithm
 exports.sort = function (items) {
   // Sort the items by their height

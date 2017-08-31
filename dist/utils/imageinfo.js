@@ -1,5 +1,3 @@
-'use strict';
-
 function readUInt32(buffer, offset, bigEndian) {
 	if (buffer.readUInt32) {
 		return buffer.readUInt32(offset, bigEndian);
@@ -10,12 +8,13 @@ function readUInt32(buffer, offset, bigEndian) {
 		if (buffer.readUInt32BE) {
 			return buffer.readUInt32BE(offset);
 		}
-		value = (buffer[offset] << 24) + (buffer[offset + 1] << 16) + (buffer[offset + 2] << 8) + buffer[offset + 3];
-	} else {
+		value = (buffer[offset] << 24) + (buffer[offset+1] << 16) + (buffer[offset+2] << 8) + buffer[offset+3];
+	}
+	else {
 		if (buffer.readUInt32LE) {
 			return buffer.readUInt32LE(offset);
 		}
-		value = buffer[offset] + (buffer[offset + 1] << 8) + (buffer[offset + 2] << 16) + (buffer[offset + 3] << 24);
+		value = buffer[offset] + (buffer[offset+1] << 8) + (buffer[offset+2] << 16) + (buffer[offset+3] << 24);
 	}
 	return value;
 }
@@ -30,12 +29,13 @@ function readUInt16(buffer, offset, bigEndian) {
 		if (buffer.readUInt16BE) {
 			return buffer.readUInt16BE(offset);
 		}
-		value = (buffer[offset] << 8) + buffer[offset + 1];
-	} else {
+		value = (buffer[offset] << 8) + buffer[offset+1];
+	}
+	else {
 		if (buffer.readUInt16LE) {
 			return buffer.readUInt16LE(offset);
 		}
-		value = buffer[offset] + (buffer[offset + 1] << 8);
+		value = buffer[offset] + (buffer[offset+1] << 8);
 	}
 	return value;
 }
@@ -48,7 +48,7 @@ function readBit(buffer, offset, bitOffset) {
 
 	var b = buffer[offset];
 	if (bitOffset < 7) {
-		b >>>= 7 - bitOffset;
+		b >>>= (7 - bitOffset);
 	}
 
 	var val = b & 0x01;
@@ -70,7 +70,7 @@ function readBits(buffer, offset, bitOffset, bitLen, signed) {
 	var bytes = [];
 	for (var i = 0; i < bitLen; i++) {
 		var b = readBit(buffer, offset, bitOffset + i);
-		if (i > 0 && (bitLen - i) % 8 == 0) {
+		if (i>0 && (bitLen - i) % 8 == 0) {
 			bytes.push(val);
 			val = 0;
 		}
@@ -80,13 +80,13 @@ function readBits(buffer, offset, bitOffset, bitLen, signed) {
 	bytes.push(val);
 
 	val = new Buffer(bytes);
-	val.negative = neg ? true : false;
+	val.negative = neg?true:false;
 	return val;
 }
 
 function imageInfoPng(buffer) {
 	var imageHeader = [0x49, 0x48, 0x44, 0x52],
-	    pos = 12;
+		pos = 12;
 
 	if (!checkSig(buffer, pos, imageHeader)) {
 		return false;
@@ -98,14 +98,14 @@ function imageInfoPng(buffer) {
 		format: 'PNG',
 		mimeType: 'image/png',
 		width: readUInt32(buffer, pos, true),
-		height: readUInt32(buffer, pos + 4, true)
+		height: readUInt32(buffer, pos+4, true),
 	};
 }
 
 function imageInfoJpg(buffer) {
 	var pos = 2,
-	    len = buffer.length,
-	    sizeSig = [0xff, [0xc0, 0xc2]];
+		len = buffer.length,
+		sizeSig = [0xff, [0xc0, 0xc2]];
 
 	while (pos < len) {
 		if (checkSig(buffer, pos, sizeSig)) {
@@ -114,8 +114,8 @@ function imageInfoJpg(buffer) {
 				type: 'image',
 				format: 'JPG',
 				mimeType: 'image/jpeg',
-				width: readUInt16(buffer, pos + 2, true),
-				height: readUInt16(buffer, pos, true)
+				width: readUInt16(buffer, pos+2, true),
+				height: readUInt16(buffer, pos, true),
 			};
 		}
 
@@ -133,29 +133,30 @@ function imageInfoGif(buffer) {
 		format: 'GIF',
 		mimeType: 'image/gif',
 		width: readUInt16(buffer, pos, false),
-		height: readUInt16(buffer, pos + 2, false)
+		height: readUInt16(buffer, pos+2, false),
 	};
 }
 
 function imageInfoSwf(buffer) {
 	var pos = 8,
-	    bitPos = 0,
-	    val;
+		bitPos = 0,
+		val;
 
 	if (buffer[0] === 0x43) {
 		try {
 			// If you have zlib available ( npm install zlib ) then we can read compressed flash files
 			buffer = require('zlib').inflate(buffer.slice(8, 100));
 			pos = 0;
-		} catch (ex) {
+		}
+		catch (ex) {
 			// Can't get width/height of compressed flash files... yet (need zlib)
 			return {
 				type: 'flash',
 				format: 'SWF',
 				mimeType: 'application/x-shockwave-flash',
 				width: null,
-				height: null
-			};
+				height: null,
+			}
 		}
 	}
 
@@ -182,20 +183,21 @@ function imageInfoSwf(buffer) {
 		format: 'SWF',
 		mimeType: 'application/x-shockwave-flash',
 		width: Math.ceil((xMax - xMin) / 20),
-		height: Math.ceil((yMax - yMin) / 20)
+		height: Math.ceil((yMax - yMin) / 20),
 	};
 }
 
 function checkSig(buffer, offset, sig) {
 	var len = sig.length;
 	for (var i = 0; i < len; i++) {
-		var b = buffer[i + offset],
-		    s = sig[i],
-		    m = false;
+		var b = buffer[i+offset],
+			s = sig[i],
+			m = false;
 
 		if ('number' == typeof s) {
 			m = s === b;
-		} else {
+		}
+		else {
 			for (var k in s) {
 				var o = s[k];
 				if (o === b) {
@@ -225,3 +227,4 @@ module.exports = function imageInfo(buffer, path) {
 
 	return false;
 };
+

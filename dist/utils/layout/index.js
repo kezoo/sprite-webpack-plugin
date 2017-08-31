@@ -1,5 +1,3 @@
-'use strict';
-
 // Load in packing.smith (from spritesmith) and create algorithm store
 var PackingSmith = require('./smiths/packing.smith.js'),
     assert = require('assert'),
@@ -20,7 +18,7 @@ function Layout(algorithmName, options) {
     algorithm = algorithms[algorithmName];
 
     // Assert that the algorithm was found
-    assert(algorithm, 'Sorry, the \'' + algorithmName + '\' algorithm could not be loaded.');
+    assert(algorithm, 'Sorry, the \'' + algorithmName +'\' algorithm could not be loaded.');
   }
 
   // Create a new PackingSmith with our algorithm and return

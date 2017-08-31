@@ -1,5 +1,3 @@
-"use strict";
-
 // Add in left-right algorithm
 exports.sort = function (items) {
   // Sort the items by their width
