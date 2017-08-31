@@ -72,11 +72,50 @@
   fixedStylePath {String} this is for the css property 'background-url',
                  if you know the image url, you can assign it here, recommend.
                  otherwise the plugin will use the relative path.
-                 :new:, add support for base64, simply just using this word.
+                 **add support for base64, simply just using this word.**
 
 
 ```
 
+If you want to use your own template, here is the object will return to it:
+```
+  @return Object:
+    {
+      [
+        {
+          name: '' // Icon name,
+          x: // X of background position,
+          y: // Y of background position,
+          width: // Icon width,
+          height: // Icon height,
+          image: // Background image url,
+          escaped_image: // Background image url,
+          total_width: // Image width,
+          total_height: // Image height,
+          offset_x: // offset x,
+          offset_y: // offset y,
+          px: [
+            {
+              enlargedImage: // retina image url,
+              enlargedX: // Background size width,
+              enlargedY: // Background size height,
+            }
+          ],
+          class: // Icon class name,
+          enlargedImage: // Retina image url,
+          enlargedX: // Background size width,
+          enlargedY: // Background size height
+        },
+      ],
+      enlarge: // DPR value,
+      imgUrl: // Background image url,
+      imgHdUrl: // Retina image url,
+      imgName: // Image name,
+      nameClass: // className base on image base in case for some special usege,
+      enlargedX: // Background size width,
+      enlargedY: // Background size height
+    }
+```
 
 A more imaginable way to explainate option "isBundled"
 
